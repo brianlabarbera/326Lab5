@@ -14,6 +14,8 @@ public:
 	int postfixEval(char postfix[]);
 	bool isOperator(char ch);
 	bool isOperand(char ch);
+	int precendence(char op);
+	void infixtoPostfix(char infix[]);
 	float operation(int a, int b, char op);
 
 private:

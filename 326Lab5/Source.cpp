@@ -7,9 +7,9 @@ int main() {
 
 	ArrStack eval;
 
-	char postfix[10] = {'3','5','+'};
+	char infix[10] = {'(','a','+', 'b', ')', '*', 'c'};
 
-	std::cout << eval.postfixEval(postfix);
+	eval.infixtoPostfix(infix);
 
 	return 0;
 }

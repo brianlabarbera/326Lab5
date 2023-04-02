@@ -27,6 +27,23 @@ void ArrStack::getPop(int& x, bool& success) {
 	}
 }
 
+int ArrStack::precendence(char op) {
+
+	switch (op) {
+	case '+':
+	case '-':
+		return 1;
+	case '*':
+	case '/':
+		return 2;
+	case '^':
+		return 3;
+	default:
+		return -1;
+	}
+
+}
+
 float ArrStack::operation(int a, int b, char op) {
 	
 	if (op == '+')
@@ -62,7 +79,7 @@ bool ArrStack::isOperand(char ch) {
 int ArrStack::postfixEval(char postfix[]) {
 	bool success;
 
-	int i = 0, j = 0;
+	int i = 0;
 
 	int op2;
 	int op1;
@@ -86,5 +103,68 @@ int ArrStack::postfixEval(char postfix[]) {
 		}
 		i++;
 	}
+
 	return op;
+}
+
+void ArrStack::infixtoPostfix(char infix[]) {
+
+	bool success;
+
+	std::string result;
+
+	int i = 0;
+	int num = 0;
+
+	while (infix[i] != '\0') {
+
+		char temp = infix[i];
+
+		i++;
+
+		if ((temp >= 'a' && temp <= 'z') || (temp >= 'A' && temp <= 'Z')
+			|| (temp >= '0' && temp <= '9')) {
+			result += temp;
+		}
+
+		else if (temp == '(') {
+			push('(', success);
+		}
+
+		else if (temp == ')') {
+
+			getPop(num, success);
+
+			while (num != '(') {
+				result += num;
+				pop(num, success);
+			}
+		}
+
+		else {
+
+			while (top == NULL && precendence(infix[i] <= precendence(num))) {
+
+				result += num;
+
+				pop(num, success);
+
+			}
+
+			push(num, success);
+
+		}
+
+		while (top == NULL) {
+
+			result += num;
+			pop(num, success);
+
+		}
+
+		std::cout << result << std::endl;
+
+
+	}
+
 }
