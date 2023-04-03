@@ -133,9 +133,9 @@ void ArrStack::infixtoPostfix(char infix[]) {
 
 		else if (temp == ')') {
 
-			getPop(num, success);
+			pop(num, success);
 
-			while (num != '(') {
+			while (top > -1 && num != '(') {
 				result += num;
 				pop(num, success);
 			}
@@ -143,7 +143,9 @@ void ArrStack::infixtoPostfix(char infix[]) {
 
 		else {
 
-			while (top == NULL && precendence(infix[i] <= precendence(num))) {
+			getPop(num, success);
+
+			while (top > -1 && precendence(temp) <= precendence(num)) {
 
 				result += num;
 
@@ -151,20 +153,22 @@ void ArrStack::infixtoPostfix(char infix[]) {
 
 			}
 
-			push(num, success);
+			push(temp, success);
+
 
 		}
 
-		while (top == NULL) {
+	}
 
-			result += num;
-			pop(num, success);
+	while (top > -1) {
 
-		}
 
-		std::cout << result << std::endl;
+		pop(num, success);
+		result += num;
 
 
 	}
+
+	std::cout << result << std::endl;
 
 }
